@@ -1,0 +1,40 @@
+<form>
+  <div>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  </div>
+  <div>
+    <label for="id_user">ID</label>
+    <input type="number" id="id_user">
+  </div>
+  <div>
+    <label for="user_fname">First Name</label>
+    <input type="text" id="fname_user">
+  </div>
+  <div>
+    <label for="user_lname">Last Name</label>
+    <input type="text" id="lname_user">
+  </div>
+  <div>
+    <label for="id">Year Salary</label>
+    <input type="number" id="ysalary_user">
+  </div>
+  <button id="update-btn">Update user</button>
+</form>
+
+<script type="text/javascript">
+  $("#update-btn").click(function(e) {
+    e.preventDefault();
+    const id = $("#id_user").val();
+    const fname = $("#fname_user").val();
+    const lname = $("#lname_user").val();
+    const ysalary = $("#ysalary_user").val();
+    const token = $("#authenticity_token").val();
+
+    $.ajax({
+      url: '/users/' + id,
+      type: 'PATCH',
+      contentType: 'application/json',
+      data: JSON.stringify({authenticity_token: token, user: {fname, lname, ysalary}})
+    });
+  })
+</script>
